@@ -1,0 +1,10 @@
+import axios from "axios";
+
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1",
+});
+
+export const setToken = (token: string | null) => {
+  if (token) api.defaults.headers.common.Authorization = `******;
+  else delete api.defaults.headers.common.Authorization;
+};
