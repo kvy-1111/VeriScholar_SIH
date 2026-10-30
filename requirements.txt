@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+python-multipart
+pynacl
+rapidfuzz
+qrcode[pil]

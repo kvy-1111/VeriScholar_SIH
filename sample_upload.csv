@@ -1,0 +1,9 @@
+apaar_id,name,dob,gender,programme,category,nri,oci,fn,supernumerary,admission_date,consent
+389662124855,Nisha Verma,2006-05-05,F,CSE,General,no,no,no,no,2025-08-12,yes
+940218936554,Aman Joshi,2006-05-05,F,CSE,General,no,no,no,no,2025-08-12,yes
+652243539300,Bad Checkdigit,2006-05-05,F,CSE,General,no,no,no,no,2025-08-12,yes
+12345678901,Short Id,2006-05-05,F,CSE,General,no,no,no,no,2025-08-12,yes
+147676177339,,2006-05-05,F,CSE,General,no,no,no,no,2025-08-12,yes
+389662124855,Nisha Verma,2006-05-05,F,CSE,General,no,no,no,no,2025-08-12,yes
+698877082546,Bad Date,2006-05-05,F,CSE,General,no,no,no,no,12-08-2025,yes
+116527791952,Cross College Dup,2006-05-05,F,CSE,General,no,no,no,no,2025-08-12,yes

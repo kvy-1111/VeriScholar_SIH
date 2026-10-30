@@ -1,0 +1,462 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VeriScholar</title><link rel="icon" type="image/png" href="/static/favicon.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap');
+:root{
+  --ink:#0f1923;--ink2:#2a3548;--mut:#64748b;--bg:#f0f4f9;--card:#ffffff;--line:#e2e8f2;
+  --ok:#0d9488;--ok2:#ccfbf1;--ok3:#0f766e;
+  --warn:#d97706;--warn2:#fef3c7;
+  --bad:#dc2626;--bad2:#fee2e2;
+  --brand:#1e3a5f;--brand2:#2563eb;--brand3:#dbeafe;
+  --sev-h:#dc2626;--sev-m:#d97706;--sev-l:#0ea5e9;
+  --radius:10px;--shadow:0 2px 12px rgba(15,25,40,.08);--shadow2:0 4px 24px rgba(15,25,40,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+/* ---- HEADER ---- */
+header{background:var(--brand);color:#fff;padding:0 28px;display:flex;gap:14px;align-items:center;height:58px;flex-shrink:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-wrap{width:38px;height:38px;border-radius:8px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-wrap img{width:38px;height:38px;object-fit:contain;display:block}
+.brand-name{font:700 20px 'Sora',Georgia,serif;letter-spacing:-.2px;color:#fff}
+.mock-badge{background:#f59e0b;color:#1c1917;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;letter-spacing:.2px}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px}
+.hdr-user{color:rgba(255,255,255,.75);font-size:13px}
+/* ---- NAV ---- */
+nav{display:flex;gap:0;padding:0 20px;background:#fff;border-bottom:2px solid var(--line);overflow-x:auto;flex-shrink:0}
+nav a{padding:13px 18px;cursor:pointer;color:var(--mut);border-bottom:3px solid transparent;white-space:nowrap;font-size:13px;font-weight:500;transition:color .15s;text-decoration:none;user-select:none}
+nav a:hover{color:var(--ink)}nav a.on{color:var(--brand);border-bottom-color:var(--brand2);font-weight:600}
+.srch-wrap{margin-left:auto;display:flex;align-items:center;gap:8px;padding:6px 0}
+.srch-wrap input{width:270px;max-width:100%;padding:7px 12px;border:1.5px solid var(--line);border-radius:var(--radius);font:inherit;background:#f8fafc;color:var(--ink)}
+.srch-wrap input:focus{outline:none;border-color:var(--brand2);background:#fff}
+#cnt{font-size:12px;color:var(--mut);white-space:nowrap}
+/* ---- LAYOUT ---- */
+main{padding:24px;max-width:1280px;margin:auto}
+.page-title{font:700 22px 'Sora',sans-serif;color:var(--ink);margin-bottom:20px}
+.page-desc{color:var(--mut);font-size:13px;margin-top:-14px;margin-bottom:20px}
+/* ---- CARDS ---- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card-hd{font:600 15px 'Sora',sans-serif;margin-bottom:12px;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* ---- TABLE ---- */
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f1f5fb;font-weight:600;font-size:12px;color:var(--ink2);letter-spacing:.3px}
+tr:last-child td{border-bottom:none}tr:hover td{background:#f8faff}
+/* ---- TAGS ---- */
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600}
+.high{background:var(--bad2);color:var(--bad)}.medium{background:var(--warn2);color:var(--warn)}.low{background:#e0f2fe;color:#0369a1}
+.tok-ok{background:var(--ok2);color:var(--ok3)}.tok-bad{background:var(--bad2);color:var(--bad)}.tok-warn{background:var(--warn2);color:var(--warn)}
+/* ---- SCORE ---- */
+.score{font:700 20px 'Sora',serif;padding:3px 14px;border-radius:8px}
+.sc-g{background:var(--ok2);color:var(--ok3)}.sc-y{background:var(--warn2);color:var(--warn)}.sc-r{background:var(--bad2);color:var(--bad)}
+/* ---- BAR ---- */
+.prog-bar{margin:8px 0 2px;font-size:12px;color:var(--mut)}
+.prog-bar span{display:block;height:7px;background:var(--ok);border-radius:4px;margin-top:4px;transition:width .4s}
+.prog-bar span.over{background:var(--bad)}
+/* ---- BUTTONS ---- */
+button{font:inherit;padding:7px 16px;border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s}
+button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+button.p{background:var(--brand2);border-color:var(--brand2);color:#fff}button.p:hover{background:#1d4ed8;border-color:#1d4ed8}
+button.ok{background:var(--ok);border-color:var(--ok);color:#fff}button.ok:hover{background:var(--ok3)}
+button.danger{background:#fff;border-color:var(--bad);color:var(--bad)}button.danger:hover{background:var(--bad);color:#fff}
+button.sm{padding:4px 10px;font-size:12px;border-radius:7px}
+/* ---- FORM ---- */
+.field{margin-bottom:14px}
+.field label,.lbl{display:block;font-weight:600;font-size:13px;color:var(--ink2);margin-bottom:5px}
+input,select,textarea{font:inherit;padding:9px 12px;border:1.5px solid var(--line);border-radius:var(--radius);width:100%;background:#fff;color:var(--ink);transition:border-color .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand2)}
+textarea{min-height:100px;font-size:13px}
+small{font-size:12px;color:var(--mut);display:block;margin-top:3px}
+.err{color:var(--bad);font-size:13px}.okc{color:var(--ok3)}
+/* ---- AUTH ---- */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#0f1923 0%,#1e3a5f 60%,#2563eb 100%)}
+.auth-card{background:#fff;border-radius:16px;padding:40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.auth-logo-wrap{text-align:center;margin-bottom:24px}
+.auth-logo-wrap img{width:80px;height:80px;object-fit:contain;border-radius:12px;background:#f0f4f9;padding:8px;display:block;margin:0 auto 12px}
+.auth-logo-wrap .auth-title{font:700 24px 'Sora',serif;color:var(--ink)}
+.auth-logo-wrap .auth-sub{font-size:13px;color:var(--mut);margin-top:4px}
+.sw{display:flex;gap:8px;align-items:flex-start}
+.sw input{flex:1}
+.sw button{margin-top:0;white-space:nowrap;flex-shrink:0}
+.alt{text-align:center;font-size:13px;color:var(--mut);margin-top:16px}
+a.l{color:var(--brand2);cursor:pointer;font-weight:600;text-decoration:none}a.l:hover{text-decoration:underline}
+.demo-creds{margin-top:14px;padding:10px 14px;background:#f1f5fb;border-radius:8px;font-size:12px;color:var(--mut);line-height:1.8}
+/* ---- VERIFY ---- */
+.res{margin-top:16px;padding:20px;border-radius:var(--radius);border:2px solid}
+.res.v{border-color:var(--ok);background:#f0fdfa}.res.x{border-color:var(--bad);background:#fef2f2}
+.res h3{margin-bottom:8px;font:700 16px 'Sora',sans-serif}
+/* ---- MODAL ---- */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:999}
+.modal-inner{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:520px;max-height:90vh;overflow:auto;box-shadow:var(--shadow2)}
+.modal-inner h3{font:700 18px 'Sora',sans-serif;margin-bottom:16px}
+/* ---- QR ---- */
+.qr-wrap{text-align:center;margin-bottom:16px}
+.qr-wrap img{max-width:200px;border-radius:8px;border:1px solid var(--line)}
+/* ---- MISC ---- */
+[hidden]{display:none!important}
+.nores{text-align:center;color:var(--mut);padding:32px;font-size:14px}
+.sep{height:1px;background:var(--line);margin:20px 0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.stat-box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;text-align:center;box-shadow:var(--shadow)}
+.stat-box .val{font:700 28px 'Sora',serif;color:var(--brand)}
+.stat-box .lbl2{font-size:12px;color:var(--mut);margin-top:2px}
+.alert{padding:12px 16px;border-radius:var(--radius);font-size:13px;margin-bottom:16px}
+.alert.ok{background:var(--ok2);color:var(--ok3);border:1px solid #99f6e4}
+.alert.bad{background:var(--bad2);color:var(--bad);border:1px solid #fca5a5}
+.alert.info{background:var(--brand3);color:var(--brand);border:1px solid #93c5fd}
+.record-detail .kv{display:flex;gap:12px;margin-bottom:8px;font-size:13px}
+.record-detail .k{color:var(--mut);width:130px;flex-shrink:0}
+.tabs2{display:flex;border-bottom:2px solid var(--line);margin-bottom:16px}
+.tabs2 a{padding:8px 18px;cursor:pointer;color:var(--mut);border-bottom:3px solid transparent;font-size:13px;font-weight:500;margin-bottom:-2px}
+.tabs2 a.on{color:var(--brand2);border-bottom-color:var(--brand2);font-weight:600}
+.chain-ok{display:flex;align-items:center;gap:8px;color:var(--ok3);font-weight:600;font-size:14px}
+.chain-bad{display:flex;align-items:center;gap:8px;color:var(--bad);font-weight:600;font-size:14px}
+:focus-visible{outline:2px solid var(--brand2);outline-offset:2px}
+.upload-drop{border:2.5px dashed var(--line);border-radius:var(--radius);padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:#f8fafc}
+.upload-drop:hover,.upload-drop.drag{border-color:var(--brand2);background:var(--brand3)}
+.upload-drop .icon{font-size:32px;margin-bottom:8px}
+.upload-drop p{color:var(--mut);font-size:13px}
+.prog-list{margin-top:4px}
+.prog-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+.prog-item:last-child{border:none}
+.consent-chip{font-size:11px;padding:2px 7px;border-radius:99px;font-weight:600}
+.yes-chip{background:var(--ok2);color:var(--ok3)}.no-chip{background:var(--bad2);color:var(--bad)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"></div>
+<script>
+let T=null,U=null,tab="",Q="",AUTH="login";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const TABS={institution:["dash","upload","students","flags","records"],aicte:["dash","flags","students","verify","records","audit"],reviewer:["flags"],verifier:["verify"]};
+const NAME={dash:"Dashboard",upload:"Upload Students",students:"Students",flags:"Review Queue",verify:"Verify Record",audit:"Audit Log",records:"Issued Records"};
+const PH={dash:"Search colleges, state, programme",upload:"Search upload history",students:"Search name, APAAR ID, college",flags:"Search type, college, reason",verify:"Search verifications",audit:"Search actor, action, detail",records:"Search issued records"};
+
+async function api(p,o={}){
+  const h={Authorization:T||""};
+  if(o.body&&!(o.body instanceof FormData)){h["Content-Type"]="application/json";o.body=JSON.stringify(o.body)}
+  const r=await fetch("/api/v1"+p,{...o,headers:h});
+  if(!r.ok){let d="Request failed";try{d=(await r.json()).detail||d}catch(e){}throw new Error(typeof d=="string"?d:"Please check the details you entered")}
+  return (r.headers.get("content-type")||"").includes("json")?r.json():r.text()
+}
+async function dl(p,n){const t=await api(p);const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/csv"}));a.download=n;a.click()}
+function go(t){tab=t;Q="";render()}
+function logout(){T=U=null;Q="";AUTH="login";render()}
+
+// ---------- LOGO ----------
+const LOGO_HTML=`<div class="logo-wrap"><img src="/static/logo.png" alt="VeriScholar logo" onerror="this.style.display='none';this.parentNode.innerHTML='<span style=\'font:700 14px Sora,serif;color:#1e3a5f\'>VS</span>'"></div>`;
+const AUTH_LOGO=`<img src="/static/logo.png" alt="VeriScholar logo" width="80" height="80" style="border-radius:12px;background:#f0f4f9;padding:8px;display:block;margin:0 auto 12px;object-fit:contain" onerror="this.style.display='none'">`;
+
+// ---------- LOGIN ----------
+function loginView(msg="",ok=false){
+  AUTH="login";
+  $("body").innerHTML=`
+<div class="auth-wrap"><div class="auth-card">
+<div class="auth-logo-wrap">${AUTH_LOGO}<div class="auth-title">VeriScholar</div><div class="auth-sub">Academic Records Verification Platform</div></div>
+<div class="field"><label>Username<input id="u" value="aicte" autocomplete="username"></label></div>
+<div class="field"><label>Password<div class="sw"><input id="p" type="password" value="aicte123" autocomplete="current-password" onkeydown="if(event.key=='Enter')doLogin()"><button type="button" onclick="tp1()">Show</button></div></label></div>
+<button class="p" style="width:100%;padding:11px" onclick="doLogin()">Sign in</button>
+${msg?`<div class="alert ${ok?'ok':'bad'}" style="margin-top:12px">${esc(msg)}</div>`:""}
+<div class="alt">New here? <a class="l" onclick="registerView()">Create an account</a></div>
+<div class="demo-creds"><b>Demo accounts:</b><br>aicte / aicte123 &nbsp;·&nbsp; inst1..inst5 / inst123<br>reviewer / rev123 &nbsp;·&nbsp; verifier / ver123</div>
+</div></div>`;
+  document.getElementById("app") || document.body.appendChild(Object.assign(document.createElement("div"),{id:"app"}));
+  document.getElementById("modal") || document.body.appendChild(Object.assign(document.createElement("div"),{id:"modal"}));
+}
+function tp1(){const t=$("#p").type=="password";$("#p").type=t?"text":"password";this.textContent=t?"Hide":"Show"}
+async function doLogin(){
+  try{const r=await api("/login",{method:"POST",body:{username:$("#u").value,password:$("#p").value}});T=r.token;U=r;tab="";render()}
+  catch(e){loginView(e.message)}
+}
+
+// ---------- REGISTER ----------
+async function registerView(msg="",keep={}){
+  AUTH="register";let ins=[];try{ins=await api("/institutions")}catch(e){}
+  const k=keep,role=k.role||"institution";
+  $("body").innerHTML=`
+<div class="auth-wrap"><div class="auth-card" style="max-width:460px">
+<div class="auth-logo-wrap">${AUTH_LOGO}<div class="auth-title">Create account</div><div class="auth-sub">Join VeriScholar</div></div>
+<div class="field"><label>Full name<input id="rn" value="${esc(k.full_name||"")}" autocomplete="name" placeholder="Your full name"></label></div>
+<div class="field"><label>Email<input id="re" type="email" value="${esc(k.email||"")}" autocomplete="email" placeholder="you@institution.edu.in"></label></div>
+<div class="field"><label>Username<input id="ru" value="${esc(k.username||"")}" autocomplete="username" placeholder="3–30 letters, numbers or _"><small>3 to 30 letters, numbers or underscores</small></label></div>
+<div class="field"><label>Account type<select id="rr" onchange="rtoggle()"><option value="institution" ${role=="institution"?"selected":""}>Institution (upload students, issue records)</option><option value="verifier" ${role=="verifier"?"selected":""}>Verifier (check signed records)</option></select></label></div>
+<div id="rib" class="field"><label>Institution<select id="ri"><option value="">Choose your institution</option>${ins.map(i=>`<option value="${esc(i.id)}" ${k.inst==i.id?"selected":""}>${esc(i.name)} (${esc(i.state)})</option>`).join("")}</select></label></div>
+<div class="field"><label>Password<div class="sw"><input id="rp" type="password" autocomplete="new-password" placeholder="At least 8 chars with a letter and number"><button type="button" onclick="tp2()">Show</button></div><small>At least 8 characters, with a letter and a number</small></label></div>
+<div class="field"><label>Confirm password<input id="rp2" type="password" autocomplete="new-password" onkeydown="if(event.key=='Enter')doReg()"></label></div>
+<button class="p" style="width:100%;padding:11px" onclick="doReg()">Create account</button>
+${msg?`<div class="alert bad" style="margin-top:12px">${esc(msg)}</div>`:""}
+<div class="alt">Already have an account? <a class="l" onclick="loginView()">Sign in</a></div>
+<div style="margin-top:12px;font-size:12px;color:var(--mut);text-align:center">AICTE and reviewer accounts are created by an administrator.</div>
+</div></div>`;
+  document.getElementById("app") || document.body.appendChild(Object.assign(document.createElement("div"),{id:"app"}));
+  document.getElementById("modal") || document.body.appendChild(Object.assign(document.createElement("div"),{id:"modal"}));
+  rtoggle();
+}
+function rtoggle(){const el=$("#rib");if(el)el.hidden=$("#rr").value!="institution"}
+function tp2(){const t=$("#rp").type=="password";$("#rp").type=$("#rp2").type=t?"text":"password";document.getElementById("rsh")&&(document.getElementById("rsh").textContent=t?"Hide":"Show")}
+async function doReg(){
+  const d={full_name:$("#rn").value,email:$("#re").value,username:$("#ru").value,role:$("#rr").value,inst:($("#ri")||{}).value||""},pw=$("#rp").value;
+  const bad=d.full_name.trim().length<2?"Please enter your full name":!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email.trim())?"Please enter a valid email address":!/^[A-Za-z0-9_]{3,30}$/.test(d.username.trim())?"Username must be 3 to 30 letters, numbers or underscores":d.role=="institution"&&!d.inst?"Please choose your institution":pw.length<8||!/[A-Za-z]/.test(pw)||!/\d/.test(pw)?"Password needs at least 8 characters with a letter and a number":pw!=$("#rp2").value?"The two passwords do not match":"";
+  if(bad)return registerView(bad,d);
+  try{const r=await api("/register",{method:"POST",body:{...d,password:pw}});T=r.token;U=r;tab="";Q="";render()}
+  catch(e){registerView(e.message,d)}
+}
+
+// ---------- MAIN RENDER ----------
+async function render(){
+  if(!T){AUTH=="register"?registerView():loginView();return}
+  const tabs=TABS[U.role];if(!tabs.includes(tab))tab=tabs[0];
+  document.body.innerHTML=`
+<header>
+  <a class="brand" href="#" onclick="go(tab)">
+    ${LOGO_HTML}
+    <span class="brand-name">VeriScholar</span>
+  </a>
+  <span class="mock-badge">MOCKED: ABC registry & AICTE portal</span>
+  <div class="hdr-right">
+    <span class="hdr-user">${esc(U.name)} <span style="opacity:.5">(${U.role})</span></span>
+    <button onclick="logout()" style="padding:5px 12px;font-size:12px">Log out</button>
+  </div>
+</header>
+<nav>
+  ${tabs.map(t=>`<a tabindex="0" class="${t==tab?"on":""}" onclick="go('${t}')" onkeydown="if(event.key=='Enter')go('${t}')">${NAME[t]}</a>`).join("")}
+  <div class="srch-wrap">
+    <span id="cnt" aria-live="polite"></span>
+    <input id="gs" type="search" value="${esc(Q)}" placeholder="${PH[tab]} ( / )" aria-label="Search" oninput="onSearch(this.value)">
+  </div>
+</nav>
+<main><div id="main"></div><p id="nores" class="nores" hidden></p></main>`;
+  try{await V[tab]();filt()}catch(e){$("#main").innerHTML=`<div class="alert bad">${esc(e.message)}</div>`}
+}
+
+let sT;
+function onSearch(v){Q=v;if(tab=="students"){clearTimeout(sT);sT=setTimeout(()=>ls().catch(()=>{}),220)}else filt()}
+function filt(){
+  if(tab=="students")return;
+  const q=Q.trim().toLowerCase();let n=0,t=0;
+  document.querySelectorAll("#main .sr").forEach(e=>{t++;const m=!q||e.textContent.toLowerCase().includes(q);e.hidden=!m;if(m)n++});
+  const c=$("#cnt"),z=$("#nores");
+  if(c)c.textContent=q?`${n} of ${t}`:"";
+  if(z){z.hidden=!(q&&t&&!n)&&!(q&&!t);z.textContent=`No results for "${Q.trim()}"`}
+}
+document.addEventListener("keydown",e=>{if(e.key=="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){const g=$("#gs");if(g){e.preventDefault();g.focus()}}});
+
+// ---------- VIEWS ----------
+const V={
+// ---- DASHBOARD ----
+dash:async()=>{
+  const d=await api("/dashboard");
+  d.sort((a,b)=>a.score-b.score);
+  const totInst=d.length,totStudents=d.reduce((s,i)=>s+i.progs.reduce((a,p)=>a+p.enrolled,0),0);
+  const highFlags=d.reduce((s,i)=>s+i.open,0);
+  const avgScore=d.length?Math.round(d.reduce((s,i)=>s+i.score,0)/d.length):0;
+  const topClass=avgScore>=80?"sc-g":avgScore>=50?"sc-y":"sc-r";
+  let html=`<div class="page-title">Dashboard</div>`;
+  if(U.role=="aicte"){
+    html+=`<div class="stat-grid">
+      <div class="stat-box"><div class="val">${totInst}</div><div class="lbl2">Institutions</div></div>
+      <div class="stat-box"><div class="val">${totStudents}</div><div class="lbl2">Total students</div></div>
+      <div class="stat-box"><div class="val" style="color:${highFlags>0?"var(--bad)":"var(--ok3)"}">${highFlags}</div><div class="lbl2">Open flags</div></div>
+      <div class="stat-box"><div class="val"><span class="score ${topClass}">${avgScore}</span></div><div class="lbl2">Avg. compliance score</div></div>
+    </div>
+    <p style="margin-bottom:14px"><button onclick="dl('/report.csv','verischolar_report.csv')">⬇ Download CSV report</button> <small style="display:inline;margin-left:8px">Sorted by lowest compliance. Auto-refreshes every 5 s.</small></p>`;
+  }
+  html+=`<div class="grid">`+d.map(i=>{
+    const sc=i.score,cls=sc>=80?"sc-g":sc>=50?"sc-y":"sc-r";
+    return `<div class="card sr">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div><div style="font:600 15px 'Sora',sans-serif">${esc(i.name)}</div><div style="font-size:12px;color:var(--mut)">${esc(i.id)} · ${esc(i.state)}</div></div>
+        <span class="score ${cls}" title="Compliance score">${sc}</span>
+      </div>
+      <div class="prog-list">${i.progs.map(p=>`<div class="prog-item"><span>${esc(p.programme)}</span><span style="color:var(--mut)">${p.enrolled}/${p.intake} enrolled</span></div>`).join("")}</div>
+      ${i.progs.map(p=>`<div class="prog-bar">${esc(p.programme)}<span class="${p.enrolled>p.intake?"over":""}" style="width:${Math.min(100,p.enrolled*100/(p.intake||1))}%"></span></div>`).join("")}
+      <div style="margin-top:10px;font-size:12px;color:${i.open>0?"var(--warn)":"var(--mut)"}">
+        ${i.open} open flag${i.open!=1?"s":""}${Object.keys(i.contrib).length?" · Score impact: "+Object.entries(i.contrib).map(([k,v])=>`${k} −${v}`).join(", "):""}
+      </div>
+    </div>`;
+  }).join("")+`</div>`;
+  $("#main").innerHTML=html;
+},
+// ---- UPLOAD ----
+upload:async()=>{
+  $("#main").innerHTML=`
+  <div class="page-title">Upload Students</div>
+  <div class="page-desc">Upload a CSV file of student records. Rejected rows are shown below with the reason.</div>
+  <div class="card" style="max-width:720px;margin-bottom:20px">
+    <div class="card-hd">CSV upload</div>
+    <div class="upload-drop" id="dropzone" onclick="$('#f').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)">
+      <div class="icon">📂</div>
+      <p>Click to choose a CSV file, or drag and drop here</p>
+      <p style="font-size:11px;margin-top:4px">Accepted: .csv files only</p>
+    </div>
+    <input type="file" id="f" accept=".csv" style="display:none" onchange="up()">
+    <div style="display:flex;gap:10px;margin-top:14px;align-items:center">
+      <button class="p" onclick="up()">⬆ Upload and validate</button>
+      <button onclick="dl('/template','verischolar_template.csv')">⬇ Download template</button>
+      <span id="fname" style="font-size:13px;color:var(--mut)"></span>
+    </div>
+    <div id="out" style="margin-top:16px"></div>
+  </div>
+  <h3 style="margin-bottom:12px;font:600 16px 'Sora',sans-serif">Upload history</h3>
+  <div id="uh"></div>`;
+  await lh();
+},
+// ---- FLAGS ----
+flags:async()=>{
+  const f=await api("/flags"),rv=["reviewer","aicte"].includes(U.role);
+  const counts={high:f.filter(x=>x.sev=="high").length,medium:f.filter(x=>x.sev=="medium").length,low:f.filter(x=>x.sev=="low").length};
+  let html=`<div class="page-title">Review Queue</div>`;
+  if(rv)html+=`<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+    <div class="alert bad" style="margin:0;padding:8px 14px">High: <b>${counts.high}</b></div>
+    <div class="alert" style="margin:0;padding:8px 14px;background:var(--warn2);color:var(--warn);border:1px solid #fcd34d">Medium: <b>${counts.medium}</b></div>
+    <div class="alert info" style="margin:0;padding:8px 14px">Low: <b>${counts.low}</b></div>
+  </div>`;
+  html+=`<div class="tbl-wrap"><table><tr><th>Sev.</th><th>Type</th><th>College</th><th>Record / APAAR</th><th>Reason</th><th>Status</th>${rv?"<th>Action</th>":""}</tr>`;
+  html+=f.map(x=>`<tr class="sr">
+    <td><span class="tag ${x.sev}">${x.sev}</span></td>
+    <td style="font-weight:500">${esc(x.kind)}</td>
+    <td>${esc(x.inst)}</td>
+    <td style="font-size:12px;font-family:monospace">${esc(x.apaar)}</td>
+    <td>${esc(x.reason)}${x.note?`<br><small style="color:var(--ok3)">✔ Note: ${esc(x.note)}</small>`:""}</td>
+    <td><span class="tag ${x.status=="open"?"high":x.status=="verified"?"tok-ok":"tok-warn"}">${x.status}</span></td>
+    ${rv?`<td>${x.status=="open"?`<div style="display:flex;gap:4px;flex-wrap:wrap"><button class="sm ok" onclick="rv(${x.id},'verified')">Verify</button><button class="sm" onclick="rv(${x.id},'flagged')">Keep</button><button class="sm danger" onclick="rv(${x.id},'rejected')">Reject</button></div>`:"—"}</td>`:""}
+  </tr>`).join("")+`</table></div>`;
+  $("#main").innerHTML=html;
+},
+// ---- STUDENTS ----
+students:async()=>{
+  $("#main").innerHTML=`<div class="page-title">Students</div><div id="st"></div>`;await ls()
+},
+// ---- VERIFY ----
+verify:async()=>{
+  $("#main").innerHTML=`
+  <div class="page-title">Verify a Record</div>
+  <div class="page-desc">Paste a signed token from a verifiable student record or its QR code.</div>
+  <div class="card" style="max-width:680px;margin-bottom:20px">
+    <div class="field"><label>Verification token<textarea id="tk" placeholder="Paste the token here…" style="font:12px/1.4 monospace;min-height:90px"></textarea></label></div>
+    <button class="p" onclick="vf()">🔎 Verify record</button>
+    <div id="vr"></div>
+  </div>
+  <h3 style="margin-bottom:12px;font:600 16px 'Sora',sans-serif">Recent verifications</h3>
+  <div id="vh"></div>`;
+  await lv();
+},
+// ---- ISSUED RECORDS ----
+records:async()=>{
+  const s=await api("/students?search=");
+  const can=["institution","aicte"].includes(U.role);
+  let html=`<div class="page-title">Issued Records</div>
+  <div class="page-desc">Issue signed verifiable records for students. Issued records can be shared with third parties for verification.</div>
+  <div class="tbl-wrap"><table><tr><th>APAAR ID</th><th>Name</th><th>College</th><th>Programme</th><th>Version</th><th>Consent</th>${can?"<th>Actions</th>":""}</tr>`;
+  html+=s.map(x=>`<tr class="sr">
+    <td style="font:12px monospace">${esc(x.apaar)}</td>
+    <td style="font-weight:500">${esc(x.name)}</td>
+    <td>${esc(x.inst)}</td>
+    <td>${esc(x.programme)}</td>
+    <td style="color:var(--mut)">v${x.version}</td>
+    <td><span class="consent-chip ${x.consent?"yes-chip":"no-chip"}">${x.consent?"Yes":"No"}</span></td>
+    ${can?`<td><button class="sm p" onclick="iss('${x.apaar}','${x.inst}')">Issue record</button>${U.role=="aicte"?` <button class="sm danger" onclick="tp('${x.apaar}','${x.inst}')" title="Demo: tamper">Tamper</button>`:""}</td>`:""}
+  </tr>`).join("")+`</table></div>`;
+  $("#main").innerHTML=html;
+},
+// ---- AUDIT ----
+audit:async()=>{
+  const a=await api("/audit");
+  let html=`<div class="page-title">Audit Log</div>
+  <div class="page-desc">Cryptographically chained audit trail. Every action is recorded and tamper-evident.</div>
+  <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center;flex-wrap:wrap">
+    <button class="p ok" onclick="av()">🔗 Verify chain integrity</button>
+    <button class="danger" onclick="ta()">⚠ Demo: tamper with entry</button>
+    <span id="ar"></span>
+  </div>
+  <div class="tbl-wrap"><table><tr><th>#</th><th>Timestamp</th><th>Actor</th><th>Action</th><th>Detail</th><th>Hash (12)</th></tr>`;
+  html+=a.map(x=>`<tr class="sr"><td>${x.id}</td><td style="font-size:12px">${x.ts}</td><td style="font-weight:500">${esc(x.actor)}</td><td><span class="tag ${x.action.includes("FAIL")?"high":x.action.includes("REGISTER")?"tok-ok":"low"}">${x.action}</span></td><td>${esc(x.detail)}</td><td style="font:12px monospace;color:var(--mut)">${x.h.slice(0,12)}</td></tr>`).join("")+`</table></div>`;
+  $("#main").innerHTML=html;
+}
+};
+
+// ---------- HELPERS ----------
+async function up(){
+  const f=document.getElementById("f");
+  if(!(f&&f.files[0])){alert("Please choose a CSV file first");return}
+  const fname=f.files[0].name;document.getElementById("fname").textContent=fname;
+  const fd=new FormData();fd.append("f",f.files[0]);
+  try{
+    const r=await api("/upload",{method:"POST",body:fd});
+    let html=`<div class="alert ${r.rejected?"bad":"ok"}"><b>${r.accepted} rows accepted</b>${r.rejected?`, <b>${r.rejected} rows rejected</b>`:""}. New flags appear in the Review Queue.</div>`;
+    if(r.errors.length){html+=`<div class="tbl-wrap"><table><tr><th>Row</th><th>APAAR ID</th><th>Problem</th></tr>`+r.errors.map(e=>`<tr><td>${e.row}</td><td style="font:12px monospace">${esc(e.apaar)||"(blank)"}</td><td>${e.errors.map(esc).join("; ")}</td></tr>`).join("")+`</table></div>`}
+    document.getElementById("out").innerHTML=html;await lh();filt()
+  }catch(e){document.getElementById("out").innerHTML=`<div class="alert bad">${esc(e.message)}</div>`}
+}
+function handleDrop(e){
+  e.preventDefault();document.getElementById("dropzone").classList.remove("drag");
+  const f=e.dataTransfer.files[0];
+  if(!f||!f.name.endsWith(".csv")){alert("Please drop a .csv file");return}
+  const dt=new DataTransfer();dt.items.add(f);document.getElementById("f").files=dt.files;up()
+}
+async function lh(){
+  const d=await api("/uploads");if(!document.getElementById("uh"))return;
+  document.getElementById("uh").innerHTML=d.length?`<div class="tbl-wrap"><table><tr><th>Time</th><th>Uploaded by</th><th>Result</th></tr>`+d.map(r=>`<tr class="sr"><td style="font-size:12px">${r.ts}</td><td>${esc(r.actor)}</td><td>${esc(r.detail)}</td></tr>`).join("")+`</table></div>`:`<p style="color:var(--mut);font-size:13px">No uploads yet.</p>`;
+  filt()
+}
+async function lv(){
+  const d=await api("/verifications");if(!document.getElementById("vh"))return;
+  document.getElementById("vh").innerHTML=d.length?`<div class="tbl-wrap"><table><tr><th>Time</th><th>Verifier</th><th>Result</th><th>Detail</th></tr>`+d.map(r=>`<tr class="sr"><td style="font-size:12px">${r.ts}</td><td>${esc(r.actor)}</td><td>${r.action=="VERIFY_OK"?'<b class="okc">✔ Valid</b>':'<b class="err">✘ Not valid</b>'}</td><td style="font-size:12px">${esc(r.detail)}</td></tr>`).join("")+`</table></div>`:`<p style="color:var(--mut);font-size:13px">No verifications yet.</p>`;
+  filt()
+}
+async function rv(id,o){
+  const n=prompt("Reviewer note (optional):");if(n===null)return;
+  await api(`/flags/${id}/review`,{method:"POST",body:{outcome:o,note:n}});render()
+}
+async function ls(){
+  const s=await api("/students?search="+encodeURIComponent(Q.trim()));
+  if(tab!="students"||!document.getElementById("st"))return;
+  const can=["institution","aicte"].includes(U.role);
+  document.getElementById("st").innerHTML=`<div class="tbl-wrap"><table><tr><th>APAAR ID</th><th>Name</th><th>College</th><th>Programme</th><th>Version</th><th>Consent</th>${can?"<th>Actions</th>":""}</tr>`+s.map(x=>`<tr><td style="font:12px monospace">${esc(x.apaar)}</td><td style="font-weight:500">${esc(x.name)}</td><td>${esc(x.inst)}</td><td>${esc(x.programme)}</td><td style="color:var(--mut)">v${x.version}</td><td><span class="consent-chip ${x.consent?"yes-chip":"no-chip"}">${x.consent?"Yes":"No"}</span></td>${can?`<td><button class="sm p" onclick="iss('${x.apaar}','${x.inst}')">Issue record</button>${U.role=="aicte"?` <button class="sm danger" onclick="tp('${x.apaar}','${x.inst}')">Tamper</button>`:""}</td>`:""}</tr>`).join("")+`</table></div>`+(s.length?"":`<div class="nores">No students match "${esc(Q.trim())}"</div>`);
+  document.getElementById("cnt").textContent=Q.trim()?`${s.length}${s.length==100?"+":""} found`:"";
+}
+async function iss(a,i){
+  const r=await api(`/records/${a}/${i}/issue`,{method:"POST"});
+  document.getElementById("modal").innerHTML=`<div class="modal-bg" onclick="if(event.target==this)this.innerHTML=''">
+  <div class="modal-inner">
+    <h3>📄 Verifiable record issued</h3>
+    <div class="qr-wrap"><img src="${r.qr}" alt="QR code"><p style="font-size:12px;color:var(--mut);margin-top:8px">Scan this QR code or copy the token below</p></div>
+    <div class="field"><label>Token (paste into Verify page)<textarea readonly style="font:11px/1.4 monospace;min-height:80px">${esc(r.token)}</textarea></label></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="danger" onclick="rk('${r.jti}')">🚫 Revoke this record</button>
+      <button onclick="document.getElementById('modal').innerHTML=''">Close</button>
+    </div>
+  </div></div>`;
+}
+async function rk(j){await api("/records/revoke",{method:"POST",body:{jti:j}});alert("Record revoked. Verification will now fail.")}
+async function tp(a,i){await api(`/demo/tamper-student/${a}/${i}`,{method:"POST"});ls()}
+async function vf(){
+  try{
+    const r=await api("/verify",{method:"POST",body:{token:document.getElementById("tk").value}});
+    document.getElementById("vr").innerHTML=r.valid?
+      `<div class="res v"><h3 class="okc">✔ Valid record</h3><div class="record-detail">
+        <div class="kv"><span class="k">Institution</span><span>${esc(r.institution)}</span></div>
+        <div class="kv"><span class="k">Programme</span><span>${esc(r.programme)}</span></div>
+        <div class="kv"><span class="k">Admitted</span><span>${esc(r.admission_year)}</span></div>
+        <div class="kv"><span class="k">Status</span><span>${esc(r.status)}</span></div>
+      </div><small>Signature: ${r.signature.slice(0,28)}… · Only these fields are shared with verifiers.</small></div>`:
+      `<div class="res x"><h3 class="err">✘ Not valid</h3><p>${esc(r.reason)}</p></div>`;
+    await lv()
+  }catch(e){document.getElementById("vr").innerHTML=`<div class="alert bad">${esc(e.message)}</div>`}
+}
+async function av(){
+  const r=await api("/audit/verify");
+  document.getElementById("ar").innerHTML=r.ok?
+    `<span class="chain-ok">✔ Chain intact (${r.entries} entries)</span>`:
+    `<span class="chain-bad">✘ Tampering detected at entry #${r.broken_at}</span>`;
+}
+async function ta(){await api("/demo/tamper-audit",{method:"POST"});av()}
+
+setInterval(()=>{if(T&&tab=="dash")V.dash().then(filt).catch(()=>{})},5000);
+render();
+</script>
+</body></html>
